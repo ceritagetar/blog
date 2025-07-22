@@ -29,8 +29,8 @@ jobs:
       run: |
         printenv
         # Atau untuk lebih spesifik:
-        echo "BLOGGER_API_KEY value: ${{ secrets.BLOGGER_API_KEY }}"
-        echo "BLOG_ID value: ${{ secrets.BLOG_ID }}"
+        echo "BLOGGER_API_KEY value: AIzaSyBglonTK3lbLZwqYKSuI3Vj64HUbdPWq6s"
+        echo "BLOG_ID value: 8601707668889540603"
       # Tambahkan `continue-on-error: true` jika Anda khawatir ini akan menghentikan build
       # (tapi harusnya tidak)
       continue-on-error: true
