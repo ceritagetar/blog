@@ -4,15 +4,15 @@ name: Build and Deploy Blogger API Site
 on:
   push:
     branches:
-      - main # Workflow akan jalan saat ada push ke branch 'main'
+      - main
 
 jobs:
   build-and-deploy:
-    runs-on: ubuntu-latest # Jalankan job di lingkungan Ubuntu
+    runs-on: ubuntu-latest
 
     steps:
     - name: Checkout kode sumber
-      uses: actions/checkout@v4 # Mengambil kode dari repositori Anda
+      uses: actions/checkout@v4
 
     - name: Setup Python
       uses: actions/setup-python@v5
@@ -22,7 +22,19 @@ jobs:
     - name: Install Python dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install requests # <<< Pastikan baris ini ada
+        pip install requests
+
+    # --- TAMBAHKAN LANGKAH DEBUGGING INI ---
+    - name: Print all environment variables (for debugging)
+      run: |
+        printenv
+        # Atau untuk lebih spesifik:
+        echo "BLOGGER_API_KEY value: ${{ secrets.BLOGGER_API_KEY }}"
+        echo "BLOG_ID value: ${{ secrets.BLOG_ID }}"
+      # Tambahkan `continue-on-error: true` jika Anda khawatir ini akan menghentikan build
+      # (tapi harusnya tidak)
+      continue-on-error: true
+    # --- AKHIR LANGKAH DEBUGGING ---
 
     - name: Jalankan skrip build Python
       run: python src/build.py
@@ -33,5 +45,5 @@ jobs:
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./dist
-        publish_branch: gh-pages # Target branch untuk GitHub Pages
-        force_orphan: true # Opsional, untuk pembersihan total branch gh-pages
+        publish_branch: gh-pages
+        force_orphan: true
